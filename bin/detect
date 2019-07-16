@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# bin/detect <build-dir>
-echo "Apt" && exit 0
