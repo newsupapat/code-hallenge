@@ -12,18 +12,19 @@ app.get('/', (req, res) => {
 app.post('/compilecode', (req, res) => {
   // const sourcecode = `print("Hell0 W0rld!")`
   const { code, lang } = req.body
+  let resultPromise
   switch (lang) {
     case 'c':
-      let resultPromise = c.runSource(code)
+      resultPromise = c.runSource(code)
       break
     case 'cpp':
-      let resultPromise = cpp.runSource(code)
+      resultPromise = cpp.runSource(code)
       break
     case 'node':
-      let resultPromise = node.runSource(code)
+      resultPromise = node.runSource(code)
       break
     case 'python':
-      let resultPromise = python.runSource(code)
+      resultPromise = python.runSource(code)
       break
     default:
       res.send('error')
