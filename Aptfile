@@ -1,2 +1,4 @@
-gcc
+libpq-dev
+postgresql-client
 build-essential
+libc6-dev
