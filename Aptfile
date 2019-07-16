@@ -1,1 +1,2 @@
-build-essential
+libpq-dev
+postgresql-client
