@@ -1,4 +1,5 @@
 build-essential
 libc6-dev
 libpq-dev
-libc_nonshared
+ppa:jonathonf/gcc-7.1
+gcc-7 g++-7
