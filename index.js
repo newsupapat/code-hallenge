@@ -3,7 +3,8 @@ const app = express()
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-const { c, cpp, node, python, java } = require('compile-run')
+const { node, python, java } = require('compile-run')
+const { runC, runCpp } = require('./compile_c_cpp')
 
 const PORT = process.env.PORT || 5000
 app.get('/', (req, res) => {
@@ -15,10 +16,24 @@ app.post('/compilecode', (req, res) => {
   let resultPromise
   switch (lang) {
     case 'c':
-      resultPromise = c.runSource(code)
+      runC(code, '', function (stdout, stderr, err) {
+        if (!err) {
+          console.log(stdout)
+          console.log(stderr)
+        } else {
+          console.log(err)
+        }
+      })
       break
     case 'cpp':
-      resultPromise = cpp.runSource(code)
+      runCpp(code, '', function (stdout, stderr, err) {
+        if (!err) {
+          console.log(stdout)
+          console.log(stderr)
+        } else {
+          console.log(err)
+        }
+      })
       break
     case 'node':
       resultPromise = node.runSource(code)
@@ -30,15 +45,17 @@ app.post('/compilecode', (req, res) => {
       res.send('error')
       break
   }
-  resultPromise
-    .then(result => {
-      console.log(result)
-      res.send(result)
-    })
-    .catch(err => {
-      console.log(err)
-      res.send(err)
-    })
+  if (resultPromise) {
+    resultPromise
+      .then(result => {
+        console.log(result)
+        res.send(result)
+      })
+      .catch(err => {
+        console.log(err)
+        res.send(err)
+      })
+  }
 })
 app.listen(PORT, () => {
   console.log(`Connect on Port ${PORT}`)
