@@ -7,7 +7,6 @@ var runCppFile = function(filepath, fileName, stdin, callback) {
     '-o',
     filepath + '/' + fileName,
     '-lstdc++',
-    '--sysroot=/app/.apt',
   ])
   var stdout = ''
   var stderr = ''
