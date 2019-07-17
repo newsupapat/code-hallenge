@@ -1,5 +1,5 @@
-build-essential
-libc6-dev
-libpq-dev
-ppa:jonathonf/gcc-7.1
-gcc-7 g++-7
+build-essential --allow-*
+libc6-dev --allow-*
+libpq-dev --allow-*
+ppa:jonathonf/gcc-7.1 --allow-*
+gcc-7 g++-7 --allow-*
