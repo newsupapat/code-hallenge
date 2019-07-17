@@ -23,5 +23,3 @@ libisl15
 libisl-dev
 make
 libc6-dev
-g++
-gcc-c++

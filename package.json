@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "backend": "nodemon index.js",
+    "frontend": "npm run start --prefix client",
+    "dev": "concurrently \"npm run backend\"  \"npm run start --prefix client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +18,9 @@
     "compile-run": "^2.3.0",
     "express": "^4.17.1",
     "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.1",
+    "http-proxy-middleware": "^0.19.1"
   }
 }

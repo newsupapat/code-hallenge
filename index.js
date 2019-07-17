@@ -3,8 +3,8 @@ const app = express()
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-const { node, python, java } = require('compile-run')
-const { runC, runCpp } = require('./compile_c_cpp')
+const { c, cpp, node, python, java } = require('compile-run')
+const { runC } = require('./compile_c_cpp')
 
 const PORT = process.env.PORT || 5000
 app.get('/', (req, res) => {
@@ -12,10 +12,10 @@ app.get('/', (req, res) => {
 })
 app.post('/compilecode', (req, res) => {
   // const sourcecode = `print("Hell0 W0rld!")`
-  const { code, lang } = req.body
+  const { code, lang, input } = req.body
   let resultPromise
   switch (lang) {
-    case 'c':
+    case 'c' && process.env.NODE_ENV === 'production':
       runC(code, '', function (stdout, stderr, err) {
         if (!err) {
           console.log(stdout)
@@ -27,17 +27,11 @@ app.post('/compilecode', (req, res) => {
         }
       })
       break
+    case 'c':
+      resultPromise = c.runSource(code, { stdin: input })
+      break
     case 'cpp':
-      runCpp(code, '', function (stdout, stderr, err) {
-        if (!err) {
-          console.log(stdout)
-          console.log(stderr)
-          res.send(stderr + stdout)
-        } else {
-          console.log(err)
-          res.send(err)
-        }
-      })
+      resultPromise = cpp.runSource(code)
       break
     case 'node':
       resultPromise = node.runSource(code)
@@ -61,6 +55,13 @@ app.post('/compilecode', (req, res) => {
       })
   }
 })
+if (process.env.NODE_ENV == 'production') {
+  // js and css files
+  app.use(express.static('client/build'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 app.listen(PORT, () => {
   console.log(`Connect on Port ${PORT}`)
 })
