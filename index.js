@@ -20,8 +20,10 @@ app.post('/compilecode', (req, res) => {
         if (!err) {
           console.log(stdout)
           console.log(stderr)
+          res.send(stderr, stdout)
         } else {
           console.log(err)
+          res.send(err)
         }
       })
       break
@@ -30,8 +32,10 @@ app.post('/compilecode', (req, res) => {
         if (!err) {
           console.log(stdout)
           console.log(stderr)
+          res.send(stderr, stdout)
         } else {
           console.log(err)
+          res.send(err)
         }
       })
       break
