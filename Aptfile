@@ -1,5 +1,4 @@
-build-essential 
-libc6-dev 
+build-essential  
 libpq-dev
 binutils
 cpp-5
