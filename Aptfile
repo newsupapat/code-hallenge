@@ -1,5 +1,26 @@
---allow build-essential 
---allow libc6-dev 
---allow libpq-dev 
---allow ppa:jonathonf/gcc-7.1 
---allow gcc-7 g++-7 
+build-essential 
+libc6-dev 
+libpq-dev
+binutils
+cpp-5
+libc6
+libcc1-0
+libgcc-5-dev
+libgcc1
+libstdc++6
+zlib1g
+gcc
+gcc-5
+gcc-5-base
+libmpfr4
+libmpfr-dev
+libmpc3
+libgmp3-dev
+libgmp10
+libgmp-dev
+libmpc-dev
+flex
+bison
+libisl15
+libisl-dev
+make
