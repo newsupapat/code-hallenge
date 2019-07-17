@@ -20,7 +20,7 @@ app.post('/compilecode', (req, res) => {
         if (!err) {
           console.log(stdout)
           console.log(stderr)
-          res.send(stderr, stdout)
+          res.send(stderr + stdout)
         } else {
           console.log(err)
           res.send(err)
@@ -32,7 +32,7 @@ app.post('/compilecode', (req, res) => {
         if (!err) {
           console.log(stdout)
           console.log(stderr)
-          res.send(stderr, stdout)
+          res.send(stderr + stdout)
         } else {
           console.log(err)
           res.send(err)
