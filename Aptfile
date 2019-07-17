@@ -1,4 +1,4 @@
 build-essential
 libc6-dev
 libpq-dev
-glibc
+libc_nonshared
