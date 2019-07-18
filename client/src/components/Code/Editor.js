@@ -1,21 +1,12 @@
 import React from 'react'
 import MonacoEditor from 'react-monaco-editor'
 const code = `
-
-// Define Typescript Interface Employee
-interface Employee {
-    firstName: String;
-    lastName: String;
-    contractor?: Boolean;
-}
-
-// Use Typescript Interface Employee. 
-// This should show you an error on john 
-// as required attribute lastName is missing
-const john:Employee = {
-    firstName:"John",
-    // lastName:"Smith"
-    // contractor:true
+#include <stdio.h>
+int main()
+{
+   // printf() displays the string inside quotation
+   printf("Hello, World!");
+   return 0;
 }
 
 `
@@ -31,7 +22,9 @@ class Editor extends React.Component {
     editor.focus()
   }
   onChange = (newValue, e) => {
-    console.log('onChange', newValue, e)
+    // console.log('onChange', newValue, e)
+    this.setState({ code: newValue })
+    this.props.onchange(newValue)
   }
   render () {
     const code = this.state.code
@@ -42,7 +35,7 @@ class Editor extends React.Component {
       <MonacoEditor
         width='800'
         height='600'
-        language='javascript'
+        language='c'
         theme='vs-dark'
         value={code}
         options={options}
