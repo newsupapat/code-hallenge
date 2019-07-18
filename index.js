@@ -7,9 +7,6 @@ const { c, cpp, node, python, java } = require('compile-run')
 const { runC } = require('./compile_c_cpp')
 
 const PORT = process.env.PORT || 5000
-app.get('/', (req, res) => {
-  res.send('Hello')
-})
 app.post('/compilecode', (req, res) => {
   // const sourcecode = `print("Hell0 W0rld!")`
   const { code, lang, input } = req.body
