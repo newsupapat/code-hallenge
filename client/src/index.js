@@ -15,29 +15,24 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './app.js'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import reduxThunk from 'redux-thunk'
 
-import "assets/scss/material-kit-react.scss?v=1.7.0";
+import reducer from './reducers'
+import 'assets/scss/material-kit-react.scss?v=1.7.0'
 
-// pages for this product
-import Components from "views/Components/Components.jsx";
-import LandingPage from "views/LandingPage/LandingPage.jsx";
-import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
-import LoginPage from "views/LoginPage/LoginPage.jsx";
-
-var hist = createBrowserHistory();
-
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(
+  reducer,
+  /* preloadedState, */ composeEnhancers(applyMiddleware(reduxThunk))
+)
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/landing-page" component={LandingPage} />
-      <Route path="/profile-page" component={ProfilePage} />
-      <Route path="/login-page" component={LoginPage} />
-      <Route path="/" component={Components} />
-    </Switch>
-  </Router>,
-  document.getElementById("root")
-);
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
