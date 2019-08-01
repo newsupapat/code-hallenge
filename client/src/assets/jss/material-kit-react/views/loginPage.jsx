@@ -90,7 +90,6 @@ const signupPageStyle = {
     textAlign: "center"
   },
   cardFooter: {
-    paddingTop: "0rem",
     border: "0",
     borderRadius: "6px",
     justifyContent: "center !important"
