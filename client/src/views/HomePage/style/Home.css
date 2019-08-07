@@ -38,5 +38,5 @@
     max-width: 100%;
 }
 .terminal-base {
-    max-width: 100%;
+    min-width: 100%;
 }
