@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 const INTIAL_STATE = {
-  isSignedIn: false
+  isSignedIn: false,
 };
 
 const codeReducer = (state = "", action) => {
@@ -18,6 +18,8 @@ const UserReducer = (state = INTIAL_STATE, action) => {
   switch (action.type) {
     case "USER_UPDATE":
       return { ...state, isSignedIn: true, ...action.payload };
+    case "DESTROY_UPDATE":
+      return INTIAL_STATE;
     default:
       return state;
   }
@@ -25,5 +27,5 @@ const UserReducer = (state = INTIAL_STATE, action) => {
 
 export default combineReducers({
   code: codeReducer,
-  auth: UserReducer
+  auth: UserReducer,
 });

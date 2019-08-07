@@ -2,12 +2,17 @@ export const UpdateCode = code => {
   // Return an action
   return {
     type: "CODE_CHANGE",
-    payload: code
+    payload: code,
   };
 };
 export const UpdateUser = User => {
   return {
     type: "USER_UPDATE",
-    payload: User
+    payload: User,
+  };
+};
+export const DestroyUser = () => {
+  return {
+    type: "DESTROY_UPDATE",
   };
 };

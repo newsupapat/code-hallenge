@@ -1,27 +1,27 @@
-import React from 'react'
-import MonacoEditor from 'react-monaco-editor'
-import { UpdateCode } from 'actions'
-import { connect } from 'react-redux'
+import React from "react";
+import MonacoEditor from "react-monaco-editor";
+import { UpdateCode } from "actions";
+import { connect } from "react-redux";
 
 class Editor extends React.Component {
   editorDidMount = (editor, monaco) => {
-    editor.layout()
-    console.log('editorDidMount', editor)
-    editor.focus()
-  }
+    editor.layout();
+    console.log("editorDidMount", editor);
+    editor.focus();
+  };
 
   onChange = (newValue, e) => {
-    // console.log('onChange', newValue, e)
-    this.props.UpdateCode(newValue)
-  }
+    // console.log("onChange", newValue, e);
+    this.props.UpdateCode(newValue);
+  };
 
-  render () {
+  render() {
     const options = {
-      fontSize: '14px',
+      fontSize: "14px",
       automaticLayout: true,
       mouseWheelScrollSensitivity: 0.5,
       minimap: {
-        enabled: false
+        enabled: false,
       },
       roundedSelection: false,
       scrollBeyondLastLine: false,
@@ -29,28 +29,31 @@ class Editor extends React.Component {
       scrollbar: {
         // Subtle shadows to the left & top. Defaults to true.
         useShadows: false,
-        vertical: 'visible',
-        horizontal: 'visible',
+        vertical: "visible",
+        horizontal: "visible",
 
         verticalScrollbarSize: 5,
-        horizontalScrollbarSize: 3
-      }
-    }
+        horizontalScrollbarSize: 3,
+      },
+    };
     return (
       <MonacoEditor
-        width='100%'
-        height='400px'
+        width="100%"
+        height="400px"
         language={this.props.lang.toLowerCase()}
-        theme='vs-dark'
-        value={this.props.code || ''}
+        theme="vs-dark"
+        value={this.props.codesave}
         options={options}
         onChange={this.onChange}
         editorDidMount={this.editorDidMount}
       />
-    )
+    );
   }
 }
+const mapStatetoprop = state => {
+  return { codesave: state.code };
+};
 export default connect(
-  null,
+  mapStatetoprop,
   { UpdateCode }
-)(Editor)
+)(Editor);

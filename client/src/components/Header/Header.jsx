@@ -1,78 +1,63 @@
-/*!
 
-=========================================================
-* Material Kit React - v1.7.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/material-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React from 'react'
 // nodejs library that concatenates classes
-import classNames from "classnames";
+import classNames from 'classnames'
 // nodejs library to set properties for components
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-import Hidden from "@material-ui/core/Hidden";
-import Drawer from "@material-ui/core/Drawer";
+import withStyles from '@material-ui/core/styles/withStyles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
+import Hidden from '@material-ui/core/Hidden'
+import Drawer from '@material-ui/core/Drawer'
+import history from 'history.js'
 // @material-ui/icons
-import Menu from "@material-ui/icons/Menu";
+import Menu from '@material-ui/icons/Menu'
 // core components
-import headerStyle from "assets/jss/material-kit-react/components/headerStyle.jsx";
+import headerStyle from 'assets/jss/material-kit-react/components/headerStyle.jsx'
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       mobileOpen: false
-    };
+    }
   }
   handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen });
-  };
+    this.setState({ mobileOpen: !this.state.mobileOpen })
+  }
   headerColorChange = () => {
-    const { classes, color, changeColorOnScroll } = this.props;
-    const windowsScrollTop = window.pageYOffset;
+    const { classes, color, changeColorOnScroll } = this.props
+    const windowsScrollTop = window.pageYOffset
     if (windowsScrollTop > changeColorOnScroll.height) {
       document.body
-        .getElementsByTagName("header")[0]
-        .classList.remove(classes[color]);
+        .getElementsByTagName('header')[0]
+        .classList.remove(classes[color])
       document.body
-        .getElementsByTagName("header")[0]
-        .classList.add(classes[changeColorOnScroll.color]);
+        .getElementsByTagName('header')[0]
+        .classList.add(classes[changeColorOnScroll.color])
     } else {
       document.body
-        .getElementsByTagName("header")[0]
-        .classList.add(classes[color]);
+        .getElementsByTagName('header')[0]
+        .classList.add(classes[color])
       document.body
-        .getElementsByTagName("header")[0]
-        .classList.remove(classes[changeColorOnScroll.color]);
-    }
-  };
-  componentDidMount() {
-    if (this.props.changeColorOnScroll) {
-      window.addEventListener("scroll", this.headerColorChange);
+        .getElementsByTagName('header')[0]
+        .classList.remove(classes[changeColorOnScroll.color])
     }
   }
-  componentWillUnmount() {
+  componentDidMount () {
     if (this.props.changeColorOnScroll) {
-      window.removeEventListener("scroll", this.headerColorChange);
+      window.addEventListener('scroll', this.headerColorChange)
     }
   }
-  render() {
+  componentWillUnmount () {
+    if (this.props.changeColorOnScroll) {
+      window.removeEventListener('scroll', this.headerColorChange)
+    }
+  }
+  render () {
     const {
       classes,
       color,
@@ -81,44 +66,44 @@ class Header extends React.Component {
       brand,
       fixed,
       absolute
-    } = this.props;
+    } = this.props
     const appBarClasses = classNames({
       [classes.appBar]: true,
       [classes[color]]: color,
       [classes.absolute]: absolute,
       [classes.fixed]: fixed
-    });
-    const brandComponent = <Button className={classes.title}>{brand}</Button>;
+    })
+    const brandComponent = <Button className={classes.title} onClick={()=>history.push('/')}>{brand}</Button>
     return (
       <AppBar className={appBarClasses}>
         <Toolbar className={classes.container}>
           {leftLinks !== undefined ? brandComponent : null}
           <div className={classes.flex}>
             {leftLinks !== undefined ? (
-              <Hidden smDown implementation="css">
+              <Hidden smDown implementation='css'>
                 {leftLinks}
               </Hidden>
             ) : (
               brandComponent
             )}
           </div>
-          <Hidden smDown implementation="css">
+          <Hidden smDown implementation='css'>
             {rightLinks}
           </Hidden>
           <Hidden mdUp>
             <IconButton
-              color="inherit"
-              aria-label="open drawer"
+              color='inherit'
+              aria-label='open drawer'
               onClick={this.handleDrawerToggle}
             >
               <Menu />
             </IconButton>
           </Hidden>
         </Toolbar>
-        <Hidden mdUp implementation="js">
+        <Hidden mdUp implementation='js'>
           <Drawer
-            variant="temporary"
-            anchor={"right"}
+            variant='temporary'
+            anchor={'right'}
             open={this.state.mobileOpen}
             classes={{
               paper: classes.drawerPaper
@@ -132,26 +117,26 @@ class Header extends React.Component {
           </Drawer>
         </Hidden>
       </AppBar>
-    );
+    )
   }
 }
 
 Header.defaultProp = {
-  color: "white"
-};
+  color: 'white'
+}
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf([
-    "primary",
-    "info",
-    "success",
-    "warning",
-    "danger",
-    "transparent",
-    "white",
-    "rose",
-    "dark"
+    'primary',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'transparent',
+    'white',
+    'rose',
+    'dark'
   ]),
   rightLinks: PropTypes.node,
   leftLinks: PropTypes.node,
@@ -167,17 +152,17 @@ Header.propTypes = {
   changeColorOnScroll: PropTypes.shape({
     height: PropTypes.number.isRequired,
     color: PropTypes.oneOf([
-      "primary",
-      "info",
-      "success",
-      "warning",
-      "danger",
-      "transparent",
-      "white",
-      "rose",
-      "dark"
+      'primary',
+      'info',
+      'success',
+      'warning',
+      'danger',
+      'transparent',
+      'white',
+      'rose',
+      'dark'
     ]).isRequired
   })
-};
+}
 
-export default withStyles(headerStyle)(Header);
+export default withStyles(headerStyle)(Header)

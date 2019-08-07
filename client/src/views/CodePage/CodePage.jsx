@@ -21,6 +21,7 @@ import landingPageStyle from 'assets/jss/material-kit-react/views/landingPage.js
 // Sections for this page
 import CodePage from './Sections/CardCodeing'
 
+
 const dashboardRoutes = []
 const codeC = `#include <stdio.h>
 int main()
