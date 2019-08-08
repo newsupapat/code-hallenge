@@ -1,15 +1,18 @@
-import React, { useEffect,useRef,useState } from 'react'
-import classnames from 'classnames'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 // For Router
 import history from 'history.js'
 // Semantic Css Framework
-import { Grid, Segment, Header as HeaderS } from 'semantic-ui-react'
+import { Grid, Segment, Header as HeaderS, Loader } from 'semantic-ui-react'
 
 // Components
 import Header from 'components/Header/Header.jsx'
 import HeaderLinks from 'components/Header/HeaderLinks.jsx'
 import Card from './section/Card'
+
+// Actions Redux
+import { fetchProblem } from 'actions'
 
 // Terminal
 import Terminal from 'terminal-in-react'
@@ -23,13 +26,14 @@ import HomepageStyle from './style/Homepage'
 import image from 'assets/img/bg7.jpg'
 import image2 from 'assets/img/bg7-placeholder.jpg'
 
+import LazyLoad from 'react-lazyload'
+
 const HomePage = props => {
-  const { classes, ...rest } = props
-  //State
-  const [Problem,setProblem] = useState([])
+  const { fetchProblem, Problems, classes, ...rest } = props
 
   const showMsg = () => 'Hello World'
-  //For Optimize Image Loading
+
+  // For Optimize Image Loading
   const asyncth = useRef(null)
   useEffect(() => {
     const item = asyncth.current
@@ -42,19 +46,9 @@ const HomePage = props => {
         : (item.style.backgroundImage = `url(${item.dataset.src})`)
     }
   }, [])
-  useEffect(()=>{
-    const fetchProblem  = async () => {
-      try {
-        const response = await axios.get('api/problem')
-        if(response.status === 200){
-          setProblem(response.data)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
+  useEffect(() => {
     fetchProblem()
-  },[])
+  }, [])
   return (
     <div>
       <Header
@@ -126,20 +120,28 @@ const HomePage = props => {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid >
-            <Grid.Row centered >
-              <Grid.Column mobile={16} tablet={8} computer={8} >
-                <Card />
-              </Grid.Column>
-              <Grid.Column mobile={16} tablet={8} computer={8}>
-                <Card />
-              </Grid.Column>
-              <Grid.Column mobile={16} tablet={8} computer={8}>
-                <Card />
-              </Grid.Column>
-              <Grid.Column mobile={16} tablet={8} computer={8}>
-                <Card />
-              </Grid.Column>
+          <Grid>
+            <Grid.Row centered>
+              {Problems.map((problem, i) => (
+                <Grid.Column mobile={16} tablet={8} computer={8} key={i}>
+                  <LazyLoad
+                    once
+                    height={200}
+                    // offset={[-100, 0]}
+                    // debounce={200}
+                    placeholder={
+                      <Segment
+                        inverted
+                        style={{ height: 200, marginBottom: '25%' }}
+                      >
+                        <Loader active inverted />
+                      </Segment>
+                    }
+                  >
+                    <Card problem={problem} />
+                  </LazyLoad>
+                </Grid.Column>
+              ))}
             </Grid.Row>
           </Grid>
         </div>
@@ -148,4 +150,9 @@ const HomePage = props => {
   )
 }
 
-export default withStyles(HomepageStyle)(HomePage)
+export default connect(
+  state => {
+    return { Problems: Object.values(state.Problem) }
+  },
+  { fetchProblem }
+)(withStyles(HomepageStyle)(HomePage))

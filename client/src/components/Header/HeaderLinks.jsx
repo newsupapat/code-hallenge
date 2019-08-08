@@ -2,9 +2,12 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
-import history from 'history.js'
+import { connect } from 'react-redux'
+import classnames from 'classnames'
+
 // react components for routing our app without refresh
-import { Router } from 'react-router-dom'
+import history from 'history.js'
+import { Link } from 'react-router-dom'
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles'
@@ -22,48 +25,27 @@ import Button from 'components/CustomButtons/Button.jsx'
 import headerLinksStyle from 'assets/jss/material-kit-react/components/headerLinksStyle.jsx'
 
 function HeaderLinks({ ...props }) {
-  const { classes } = props
+  const { classes, user } = props
+  console.log(user)
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
-        <Button color="transparent" target="_blank" className={classes.navLink}>
-          <CloudDownload className={classes.icons} /> Download
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        {/*<Tooltip title="Delete">
-          <IconButton aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>*/}
         <Tooltip
           id="instagram-twitter"
-          title="Follow us on twitter"
+          title="ติดตามเราที่ Youtube"
           placement={window.innerWidth > 959 ? 'top' : 'left'}
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
-            href="https://twitter.com/CreativeTim?ref=creativetim"
+            href="#"
             target="_blank"
             color="transparent"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + ' fab fa-twitter'} />
+            <i className={classes.socialIcons + ' fab fa-youtube'} />
           </Button>
         </Tooltip>
       </ListItem>
-        <ListItem className={classes.listItem}>
-          <Tooltip
-            id="instagram-facebook"
-            title="เข้าสู่ระบบกัน!!"
-            placement={window.innerWidth > 959 ? 'top' : 'left'}
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <Button color="transparent" className={classes.navLink} onClick={()=>history.push('/login')}>
-              Login
-            </Button>
-          </Tooltip>
-        </ListItem>
       <ListItem className={classes.listItem}>
         <Tooltip
           id="instagram-tooltip"
@@ -73,7 +55,7 @@ function HeaderLinks({ ...props }) {
         >
           <Button
             color="transparent"
-            href="https://www.instagram.com/CreativeTimOfficial?ref=creativetim"
+            href="#"
             target="_blank"
             className={classes.navLink}
           >
@@ -81,8 +63,77 @@ function HeaderLinks({ ...props }) {
           </Button>
         </Tooltip>
       </ListItem>
+      <ListItem className={classes.listItem}>
+        <CustomDropdown
+          noLiPadding
+          buttonText="Components"
+          buttonProps={{
+            className: classes.navLink,
+            color: "transparent"
+          }}
+          buttonIcon={Apps}
+          dropdownList={[
+            <Link to="/" className={classes.dropdownLink}>
+              All components
+            </Link>,
+            <a
+              href="https://creativetimofficial.github.io/material-kit-react/#/documentation?ref=mkr-navbar"
+              target="_blank"
+              className={classes.dropdownLink}
+            >
+              Documentation
+            </a>
+          ]}
+        />
+      </ListItem>
+      {user.isSignedIn ? (
+        <ListItem className={classes.listItem}>
+          <Tooltip
+            title="Welcome"
+            placement={window.innerWidth > 959 ? 'top' : 'left'}
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <Button
+              color="transparent"
+              className={classes.navLink}
+              // style={{ paddingTop: 0, paddingLeft: 15 }}
+              onClick={() => history.push('/login')}
+            >
+              <img
+                src={user.imageUrl}
+                alt="User images"
+                style={{
+                  width: '50px',
+                  borderRadius: '50% !important',
+                  marginRight: '10%',
+                }}
+              />
+              {user.name}
+            </Button>
+          </Tooltip>
+        </ListItem>
+      ) : (
+        <ListItem className={classes.listItem}>
+          <Tooltip
+            id="instagram-facebook"
+            title="เข้าสู่ระบบกัน!!"
+            placement={window.innerWidth > 959 ? 'top' : 'left'}
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <Button
+              color="transparent"
+              className={classes.navLink}
+              onClick={() => history.push('/login')}
+            >
+              Login
+            </Button>
+          </Tooltip>
+        </ListItem>
+      )}
     </List>
   )
 }
 
-export default withStyles(headerLinksStyle)(HeaderLinks)
+export default connect(state => {
+  return { user: state.auth }
+})(withStyles(headerLinksStyle)(HeaderLinks))

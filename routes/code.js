@@ -7,12 +7,13 @@ const { c, cpp, node, python, java } = require('compile-run')
 const Problem = require('../model/problem')
 
 router.post('/problem', async (req, res) => {
-  const { codes, inputs, outputs, theme } = req.body
+  const { codes, inputs, outputs, theme, description } = req.body
   const problem = new Problem({
     codes: codes,
     inputs: inputs,
     outputs: outputs,
-    theme: theme
+    theme: theme,
+    description: description
   })
   try {
     const SavedProblem = await problem.save()

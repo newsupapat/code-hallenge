@@ -28,7 +28,12 @@ const headerLinksStyle = theme => ({
     listStyle: "none",
     paddingTop: "0",
     paddingBottom: "0",
-    color: "inherit"
+    color: "inherit",
+    display: 'flex',
+    alignItems: 'center',
+    [theme.breakpoints.down("sm")]: {
+      display: "block"
+    }
   },
   listItem: {
     float: "left",
@@ -119,7 +124,7 @@ const headerLinksStyle = theme => ({
   },
   dropdownLink: {
     "&,&:hover,&:focus": {
-      color: "inherit",
+      color: "black",
       textDecoration: "none",
       display: "block",
       padding: "10px 20px"

@@ -36,7 +36,7 @@ class LoginPage extends React.Component {
   }
   responseGoogle = async response => {
     try {
-      this.setState({ loading: true })
+      // this.setState({ loading: true })
       const res = await axios.post('/user/token', response.profileObj)
       if (res.status !== 400) {
         this.props.UpdateUser({ ...response.profileObj, ...res.data })
@@ -120,7 +120,7 @@ class LoginPage extends React.Component {
                         <div>
                           <img
                             src={this.props.user.imageUrl}
-                            alt='...'
+                            alt='User images'
                             className={imageClasses}
                           />
                           <CardBody

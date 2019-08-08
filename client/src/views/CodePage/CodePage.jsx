@@ -6,7 +6,8 @@ import classNames from 'classnames'
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles'
 
-// @material-ui/icons
+//History for Route
+import history from 'history.js'
 
 // core components
 import Header from 'components/Header/Header.jsx'
@@ -59,8 +60,8 @@ const problem = {
   outputs: ['1', '2', '6', '24']
 }
 class LandingPage extends React.Component {
-
   render () {
+    console.log(history)
     const { classes, ...rest } = this.props
     return (
       <div >

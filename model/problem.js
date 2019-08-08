@@ -1,12 +1,19 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const problemSchema = mongoose.Schema({
-  codes: mongoose.Schema.Types.Mixed,
+  codes: {
+    type: mongoose.Schema.Types.Mixed,
+    required: true
+  },
   inputs: [String],
   outputs: [String],
-  theme:{
+  theme: {
     type: String,
     default: 'Space'
+  },
+  description: {
+    type: String,
+    required: true
   }
-});
-module.exports = mongoose.model("problem", problemSchema);
+})
+module.exports = mongoose.model('problem', problemSchema)
