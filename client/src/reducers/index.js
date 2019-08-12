@@ -25,10 +25,12 @@ const UserReducer = (state = INTIAL_STATE, action) => {
       return state
   }
 }
-const ProblemReducer = (state = [], action) => {
+const ProblemReducer = (state = {}, action) => {
   switch (action.type) {
     case 'FETCH_PROBLEM':
       return _.mapKeys(action.payload, '_id')
+    case 'FETCH_PROBLEMBYID':
+      return { ...state, [action.payload['_id']]: action.payload }
     // case 'DELETE_ID':
     //   return _.omit(state, action.payload)
     default:

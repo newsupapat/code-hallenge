@@ -3,6 +3,7 @@ import { Router, Route, Switch } from 'react-router-dom'
 import history from './history'
 import Loadable from 'react-loadable'
 import styled from 'styled-components'
+import 'semantic-ui-css/semantic.min.css'
 
 // View
 // import LandingPage from 'views/CodePage/CodePage'

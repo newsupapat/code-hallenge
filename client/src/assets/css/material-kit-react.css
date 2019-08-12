@@ -65,7 +65,7 @@ p {
   margin: 0 0 10px; }
 
 html {
-  font-family: sans-serif;
+  font-family: "Press Start 2P", cursive;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -997,3 +997,6 @@ button.slick-arrow.slick-next {
   height: 15px;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   top: -3px; }
+.swal3-container{
+  font-family: 'Mitr', sans-serif
+}

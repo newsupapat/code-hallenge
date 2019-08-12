@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const problemSchema = mongoose.Schema({
   codes: {
-    type: mongoose.Schema.Types.Mixed,
+    type: Object,
     required: true
   },
   inputs: [String],

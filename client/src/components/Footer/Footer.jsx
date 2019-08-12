@@ -23,7 +23,7 @@ function Footer({ ...props }) {
     [classes.footerWhiteFont]: whiteFont
   });
   return (
-    <footer className={footerClasses}>
+    <footer className={footerClasses} style={{fontFamily: `"Press Start 2P", cursive`,fontSize:'14px'}}>
       <div className={classes.container}>
         <div className={classes.left}>
           <List className={classes.list}>

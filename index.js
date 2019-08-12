@@ -4,6 +4,12 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+//Reduce Size
+app.get('*.js', function (req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
 // const passport = require("passport");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,7 +24,7 @@ mongoose.connection.on("connected", function() {
 const Compile = require("./routes/code");
 const Auth = require("./routes/auth");
 
-app.use("/api", Compile);
+app.use("/api", require('./routes/api'));
 app.use("/user", Auth);
 
 if (process.env.NODE_ENV == "production") {

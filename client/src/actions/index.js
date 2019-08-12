@@ -27,3 +27,13 @@ export const fetchProblem = () => async dispatch => {
     console.error(error)
   }
 }
+export const fetchProblembyid = id => async dispatch => {
+  try {
+    const response = await axios.get(`api/problem/${id}`)
+    if (response.status === 200) {
+      dispatch({ type: 'FETCH_PROBLEMBYID', payload: response.data[0] })
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
