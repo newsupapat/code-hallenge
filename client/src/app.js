@@ -9,6 +9,7 @@ import 'semantic-ui-css/semantic.min.css'
 // import LandingPage from 'views/CodePage/CodePage'
 // import LoginPage from 'views/LoginPage/LoginPage'
 // import HomePage from 'views/HomePage/Homepage'
+import Create from 'views/CreateChallenge'
 import Loading from 'components/Loading/Loader'
 
 import PrivateRoute from './PrivateRoute'
@@ -53,6 +54,7 @@ const App = () => {
         <Route path='/' exact component={HomePage} />
         <Route path='/login' exact component={LoginPage} />
         <Route path='/code' exact component={LandingPage} />
+        <Route path='/Create' exact component={Create} />
       </Switch>
     </Router>
   )

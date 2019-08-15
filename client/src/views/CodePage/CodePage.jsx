@@ -21,47 +21,13 @@ import HeaderLinks from 'components/Header/HeaderLinks.jsx'
 import Parallax from 'components/Parallax/Parallax.jsx'
 import Loading from 'components/Loading/Loader'
 
+
 import landingPageStyle from 'assets/jss/material-kit-react/views/landingPage.jsx'
 
 // Sections for this page
 import CodePage from './Sections/CardCodeing'
 
 const dashboardRoutes = []
-const codeC = `#include <stdio.h>
-int main()
-{
-    int n, i, flag = 0;
-    printf("Enter a positive integer: ");
-    scanf("%d", &n);
-    for(i = 2; i <= n/2; ++i)
-    {
-        // condition for nonprime number
-        if(n%i == 0)
-        {
-            flag = 1;
-            break;
-        }
-    }
-    if (n == 1)
-    {
-      printf("1 is neither a prime nor a composite number.");
-    }
-    else
-    {
-        if (flag == 0)
-          printf("%d is a prime number.", n);
-        else
-          printf("%d is not a prime number.", n);
-    }
-
-    return 0;
-}`
-const codeJS = `console.log('new')`
-const problem2 = {
-  codes: { C: { code: codeC }, Javascript: { code: codeJS } },
-  inputs: ['1', '2', '3', '4'],
-  outputs: ['1', '2', '6', '24']
-}
 class LandingPage extends React.Component {
   componentDidMount () {
     const { problem, location, fetchProblembyid } = this.props

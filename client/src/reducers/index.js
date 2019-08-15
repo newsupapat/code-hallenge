@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 import _ from 'lodash'
 
 const INTIAL_STATE = {
@@ -41,5 +42,6 @@ const ProblemReducer = (state = {}, action) => {
 export default combineReducers({
   code: codeReducer,
   auth: UserReducer,
-  Problem: ProblemReducer
+  Problem: ProblemReducer,
+  form: formReducer
 })

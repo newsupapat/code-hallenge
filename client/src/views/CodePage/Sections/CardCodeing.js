@@ -9,14 +9,14 @@ import {
   Placeholder,
   Button,
   Dropdown,
-  Image,
+  Icon,
   Header
 } from 'semantic-ui-react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { AwesomeButton } from 'react-awesome-button'
-import AwesomeButtonStyles from 'react-awesome-button/src/styles/styles.scss'
+import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button'
+import 'react-awesome-button/dist/styles.css'
 
 import { connect } from 'react-redux'
 import Instru from './instruction'
@@ -100,7 +100,7 @@ const Coding = props => {
       confirmButtonText: 'เข้าใจแล้ว'
     })
   }
-  const handleSubmitio = async (input, outputscheck, index) => {
+  const handleSubmitio = async (input, outputscheck, index, next) => {
     try {
       let newloading = loading.slice()
       newloading[index] = true
@@ -113,19 +113,23 @@ const Coding = props => {
       console.log(res.data)
       if (res.data.stderr) {
         setoutput(`เจอ Error ที่:${res.data.error} `)
+        next(false, 'Error นะคร้าบบ')
       } else if (
         res.data.stdout &&
         res.data.stdout.replace(/\s+/, '') !== outputscheck
       ) {
         setoutput(`Output is:${res.data.stdout} ต้องการ ${outputscheck}`)
+        next(false, 'ใกล้แล้ว')
       } else if (res.data.stdout.replace(/\s+/, '') === outputscheck) {
         setoutput(`You Pass it`)
         let newvalid = valid.slice()
         newvalid[index] = true
         setvalid(newvalid)
+        next()
       }
     } catch (e) {
       console.error(e)
+      next(false, 'Error Message :(')
     } finally {
       let newloading = loading.slice()
       newloading[index] = false
@@ -135,27 +139,38 @@ const Coding = props => {
   const renderTestButton = () => {
     return inputs.map((input, i) => {
       return (
-        <>
-          <AwesomeButton cssModule={AwesomeButtonStyles} type='primary'>
-            Button
+        <Button.Group style={{ paddingBottom: '1vw' }} key={i}>
+          <AwesomeButtonProgress
+            loadingLabel={'กำลังตรวจสอบ...'}
+            resultLabel={'Done!'}
+            size={'large'}
+            type={valid[i] ? 'whatsapp' : 'secondary'}
+            action={(element, next) => {
+              handleSubmitio(input, outputs[i], i, next)
+              console.log(next)
+            }}
+            style={{ paddingRight: '5px', width: '100%',fontFamily: 'sans-serif' }}
+          >
+            {valid[i] ? 'ผ่านแล้ว' : `input ${i + 1}`}
+          </AwesomeButtonProgress>
+          <AwesomeButton
+            size='icon'
+            type='primary'
+            ripple
+            onPress={() => showDataModel(i)}
+          >
+            <Icon name='align justify' />
           </AwesomeButton>
-          <Button.Group style={{ paddingBottom: '1vw' }} key={i}>
-            <Button
-              icon='play'
-              content={valid[i] ? 'ผ่านแล้ว' : `input ${i + 1}`}
-              primary={!valid[i] || false}
-              positive={valid[i] || false}
-              onClick={() => {
-                handleSubmitio(input, outputs[i], i)
-              }}
-              loading={loading[i] || false}
-            />
-            <Button icon='align justify' onClick={() => showDataModel(i)} />
-          </Button.Group>
-        </>
+        </Button.Group>
       )
     })
   }
+  const Runall = () => {
+    inputs.map((input, i) => {
+      handleSubmitio(input, outputs[i], i)
+    })
+  }
+
   return (
     <Grid columns={3} divided='vertically'>
       <Grid.Row style={{ padding: '1vw' }} stretched>
@@ -230,18 +245,20 @@ const Coding = props => {
             raised
             inverted
             style={{ display: 'flex', flexDirection: 'column' }}
+            className='centerbutton'
           >
             {renderTestButton()}
           </Segment>
           <Segment raised inverted>
             <Button
-              onClick={() =>
-                MySwal.fire({
-                  type: 'error',
-                  title: 'Oops...',
-                  text: 'Something went wrong!',
-                  footer: '<a href>Why do I have this issue?</a>'
-                })
+              onClick={
+                () => Runall()
+                // MySwal.fire({
+                //   type: 'error',
+                //   title: 'Oops...',
+                //   text: 'Something went wrong!',
+                //   footer: '<a href>Why do I have this issue?</a>'
+                // })
               }
               icon='play'
               content='Run All'

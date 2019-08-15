@@ -19,7 +19,11 @@ import { GoogleLogin } from 'react-google-login'
 import { GoogleLogout } from 'react-google-login'
 import { UpdateUser, DestroyUser } from 'actions/index'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Loading from 'components/Loading/Loader'
+
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/styles.css";
 
 import loginPageStyle from 'assets/jss/material-kit-react/views/loginPage.jsx'
 
@@ -129,7 +133,8 @@ class LoginPage extends React.Component {
                             <h3 className={classes.title}>
                               {this.props.user.name}
                             </h3>
-                            <h6>DESIGNER</h6>
+                            <br />
+                            {this.props.user.role === 'admin' ?<Link to="/Create"><AwesomeButton type="link">Create New Challenge</AwesomeButton></Link>:null}
                           </CardBody>
                         </div>
                         <CardFooter className={classes.cardFooter}>

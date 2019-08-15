@@ -75,6 +75,7 @@
     "react-slick": "0.24.0",
     "react-snap-scroll": "0.0.5",
     "react-swipeable-views": "0.13.3",
+    "redux-form": "^8.2.6",
     "redux-thunk": "^2.3.0",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
