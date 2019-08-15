@@ -51,6 +51,7 @@
     "node-sass": "^4.12.0",
     "nouislider": "13.1.5",
     "optimize-css-assets-webpack-plugin": "5.0.1",
+    "path": "^0.12.7",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
