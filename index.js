@@ -3,6 +3,7 @@ var express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const path = require('path');
 
 //Reduce Size
 app.get('*.js', function (req, res, next) {
