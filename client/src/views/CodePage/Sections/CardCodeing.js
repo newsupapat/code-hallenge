@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Editor from 'components/Code/CodeEditor.js'
 import ScrollLock from 'react-scroll-lock-component'
 import ReactScrollify from 'react-scrollify'
@@ -59,6 +59,8 @@ const languageOptions = [
 
 const Coding = props => {
   const { codes, inputs, outputs, description } = props.problem
+  // const refContainer = useRef(null);
+  const ref = []
   const [loading, setloading] = useState(inputs.map(() => false))
   const [valid, setvalid] = useState(inputs.map(() => false))
   const [output, setoutput] = useState(
@@ -71,6 +73,9 @@ const Coding = props => {
   useEffect(() => {
     props.UpdateCode(codes[lang].code)
   }, [])
+  useEffect(() => {
+    testdata(valid)
+  }, [valid])
   useEffect(
     () => {
       props.UpdateCode(codes[lang].code)
@@ -114,12 +119,18 @@ const Coding = props => {
       if (res.data.stderr) {
         setoutput(`เจอ Error ที่:${res.data.error} `)
         next(false, 'Error นะคร้าบบ')
+        let newvalid = valid.slice()
+        newvalid[index] = false
+        setvalid(newvalid)
       } else if (
         res.data.stdout &&
         res.data.stdout.replace(/\s+/, '') !== outputscheck
       ) {
         setoutput(`Output is:${res.data.stdout} ต้องการ ${outputscheck}`)
         next(false, 'ใกล้แล้ว')
+        let newvalid = valid.slice()
+        newvalid[index] = false
+        setvalid(newvalid)
       } else if (res.data.stdout.replace(/\s+/, '') === outputscheck) {
         setoutput(`You Pass it`)
         let newvalid = valid.slice()
@@ -147,9 +158,13 @@ const Coding = props => {
             type={valid[i] ? 'whatsapp' : 'secondary'}
             action={(element, next) => {
               handleSubmitio(input, outputs[i], i, next)
-              console.log(next)
             }}
-            style={{ paddingRight: '5px', width: '100%',fontFamily: 'sans-serif' }}
+            ref={reference => (ref[i] = reference)}
+            style={{
+              paddingRight: '5px',
+              width: '100%',
+              fontFamily: 'sans-serif'
+            }}
           >
             {valid[i] ? 'ผ่านแล้ว' : `input ${i + 1}`}
           </AwesomeButtonProgress>
@@ -165,10 +180,27 @@ const Coding = props => {
       )
     })
   }
-  const Runall = () => {
-    inputs.map((input, i) => {
-      handleSubmitio(input, outputs[i], i)
-    })
+  const postinsql = ref => {
+    ref.action()
+  }
+  const testdata = valid =>{
+    console.log(valid)
+    console.log(valid.every(lod => lod))
+    if(valid.every(lod => lod)){
+      MySwal.fire({
+          type: 'success',
+          title: 'You Pass it',
+          text: 'Congratulations',
+          footer: '<a href>Why do I have this issue?</a>'
+        })
+    }
+  }
+  const Runall = ref => {
+    // ref.map(r=>{setTimeout(function(){ r.action(); }, 300);})
+    ref[0].action()
+    setTimeout(postinsql.bind(null, ref[1]), 2000)
+    setTimeout(postinsql.bind(null, ref[2]), 3500)
+    setTimeout(postinsql.bind(null, ref[3]), 4800)
   }
 
   return (
@@ -252,13 +284,7 @@ const Coding = props => {
           <Segment raised inverted>
             <Button
               onClick={
-                () => Runall()
-                // MySwal.fire({
-                //   type: 'error',
-                //   title: 'Oops...',
-                //   text: 'Something went wrong!',
-                //   footer: '<a href>Why do I have this issue?</a>'
-                // })
+                () => Runall(ref)
               }
               icon='play'
               content='Run All'
