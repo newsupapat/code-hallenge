@@ -3,12 +3,7 @@ const { runC } = require('../../compile_c_cpp')
 const { c, cpp, node, python, java } = require('compile-run')
 // Import Model Of Each Problem
 const Problem = require('../../model/problem')
-
-const ctrl = {}
-
-ctrl.createProblem = async (req, res) => {
-  const { codes, inputs, outputs, theme, description } = req.body
-  const codeC = `#include <stdio.h>
+const codeC = `#include <stdio.h>
   int main()
   {
       int number;
@@ -28,12 +23,18 @@ ctrl.createProblem = async (req, res) => {
     inputs: ['1', '2', '3', '4'],
     outputs: ['1', '2', '6', '24']
   }
+const ctrl = {}
+
+ctrl.createProblem = async (req, res) => {
+  const { codes, inputs, outputs, theme, description,Header,Sub } = req.body
   const problem = new Problem({
     codes: codes,
     inputs: inputs,
     outputs: outputs,
     theme: theme,
-    description: description
+    description: description,
+    Header:header,
+    Sub:sub
   })
   try {
     const SavedProblem = await problem.save()

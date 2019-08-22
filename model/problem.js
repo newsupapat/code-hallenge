@@ -14,6 +14,13 @@ const problemSchema = mongoose.Schema({
   description: {
     type: String,
     required: true
+  },
+  Header: {
+    type: String,
+    required: true
+  },
+  Sub: {
+    type: String
   }
 })
 module.exports = mongoose.model('problem', problemSchema)

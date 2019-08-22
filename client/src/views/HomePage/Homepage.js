@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 // For Router
 import history from 'history.js'
