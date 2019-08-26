@@ -46,6 +46,7 @@ class LoginPage extends React.Component {
       if (res.status !== 400) {
         this.props.UpdateUser({ ...response.profileObj, ...res.data })
         // this.setState({ loading: false })
+        Cookies.set('_user',{ ...response.profileObj, ...res.data }, { expires: 1 })
         Cookies.set('_token', res.data.accessToken, { expires: 1 })
       }
     } catch (error) {
@@ -60,6 +61,8 @@ class LoginPage extends React.Component {
     if (auth2 != null) {
       auth2.signOut().then(auth2.disconnect().then(this.props.onLogoutSuccess))
     }
+    Cookies.remove('_user');
+    Cookies.remove('_token');
     this.props.DestroyUser()
   }
   componentDidMount () {

@@ -52,9 +52,9 @@ const App = () => {
     <Router history={history}>
       <Switch>
         <Route path='/' exact component={HomePage} />
-        <Route path='/login' exact component={LoginPage} />
+        <PrivateRoute path='/login' exact component={LoginPage} />
         <Route path='/code' exact component={LandingPage} />
-        <Route path='/Create' exact component={Create} />
+        <PrivateRoute path='/Create' exact component={Create} />
       </Switch>
     </Router>
   )
