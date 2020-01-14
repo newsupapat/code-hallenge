@@ -77,7 +77,7 @@ function HeaderLinks({ ...props }) {
               All components
             </Link>,
             <a
-              href="https://creativetimofficial.github.io/material-kit-react/#/documentation?ref=mkr-navbar"
+              href="#"
               target="_blank"
               className={classes.dropdownLink}
             >
